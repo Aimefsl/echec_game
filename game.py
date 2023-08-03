@@ -20,11 +20,7 @@ can_pass=False
 finish=False
 turn=True
 turns_color="white"
-
-
-        
-
-
+#Boucle Principal
 while jeu_lance:
     #nombre=len(liste_pion)-1
     pygame.display.flip()
@@ -56,9 +52,15 @@ while jeu_lance:
                                                 if check.king_dead:
                                                     finish=True
                                                     if check.color=="black":
-                                                        color="white"
+                                                        print("les whites ont gagné")
+                                                        jeu_lance=False
+
+
                                                     else:
-                                                        color="black"
+                                                        print("les whites ont gagné")
+                                                        jeu_lance=False
+
+
 
                                
                                 elif e.x<event.pos[0]<e.x+50 and e.y<event.pos[1]<e.y+50 and num_pion==e.num_pion:#Reclique sur le meme pion
@@ -97,9 +99,8 @@ while jeu_lance:
                             double_info=True
                         
                 
-            if finish:
-                print(f"les {color} ont gagné")
-                jeu_lance=False
+            
+
 
                                                
         
