@@ -1,5 +1,6 @@
 import pygame
 import copy
+import time
 pygame.init()
 def affichage_pion(surface):
    liste_pion=[]
@@ -141,6 +142,7 @@ class pion(case):
       surface.blit(self.pion,[self.case_pion[self.NcaseX],self.case_pion[str(self.NcaseY)]])
       self.num_pion=pion.num_pion
       self.premier_coup=True
+      self.askqueen=False
       pion.num_pion+=1
    def show_move(self,surface,liste_case,liste_pion):
          self.info_move=True
@@ -150,64 +152,237 @@ class pion(case):
          dernier_move=[]
          liste2=[]
          pion_sur_pion=True
-         if black_white:
-            hypy+=1
-            if self.premier_coup:
-               liste2=[hypx,str(hypy+1)]
-               
+         if self.askqueen:
+            liste1=[self.NcaseX,str(self.NcaseY+1)]
+            liste2=[self.NcaseX+1,str(self.NcaseY)]
+            liste3=[self.NcaseX-1,str(self.NcaseY)]
+            liste4=[self.NcaseX,str(self.NcaseY-1)]
+            diago1=[self.NcaseX-1,str(self.NcaseY+1)]
+            diago2=[self.NcaseX+1,str(self.NcaseY-1)]
+            diago3=[self.NcaseX+1,str(self.NcaseY+1)]
+            diago4=[self.NcaseX-1,str(self.NcaseY-1)]
+
+            liste_case_pre=[]
+            tempo=[0,0]
+
+            Gigaliste=[liste1[:],liste2[:],liste3[:],liste4[:],diago1[:],diago2[:],diago3[:],diago4[:]]
+            dernier_move=[]
+            case_good=True
+            gigalist2=[]
+            diag1=True
+            diag2=True
+            case_good=True
+            for o in range(8):
+               for i in liste_case:
+                  if diago3==fonction(i.num_case):
+                     for pion in liste_pion:
+                           if fonction(pion.case_pion) ==diago3 and pion.color==self.color:
+                              case_good=False
+                     if case_good:                          
+                        rect_queen=case(i.x,i.y,50,50,surface)
+                        pygame.draw.rect(surface,[53,60,255],rect_queen)
+                        dernier_move.append(rect_queen)
+                        for pion in liste_pion:
+                           if fonction(pion.case_pion) ==diago3:
+                                 case_good=False
+                        tempo=diago3
+                        tempo[0]+=1
+                        tempo[1]=int(tempo[1])
+                        tempo[1]+=1
+                        tempo[1]=str(tempo[1])
+                        diago3=tempo[:]
+            case_good=True
+            for o in range(8):
+               for i in liste_case:
+                  if diago1==fonction(i.num_case):
+                     for pion in liste_pion:
+                           if fonction(pion.case_pion) ==diago1 and pion.color==self.color:
+                              case_good=False
+                     if case_good:                         
+                        rect_queen=case(i.x,i.y,50,50,surface)
+                        pygame.draw.rect(surface,[53,60,255],rect_queen)
+                        dernier_move.append(rect_queen)
+                        for pion in liste_pion:
+                           if fonction(pion.case_pion) ==diago1:
+                                 case_good=False
+                        tempo=diago1
+                        tempo[0]-=1
+                        tempo[1]=int(tempo[1])
+                        tempo[1]+=1
+                        tempo[1]=str(tempo[1])
+                        diago1=tempo[:]
+            case_good=True
+            for o in range(8):
+               for i in liste_case:
+                  if diago2==fonction(i.num_case):
+                     for pion in liste_pion:
+                           if fonction(pion.case_pion) ==diago2 and pion.color==self.color:
+                              case_good=False
+                     if case_good:                         
+                        rect_queen=case(i.x,i.y,50,50,surface)
+                        pygame.draw.rect(surface,[53,60,255],rect_queen)
+                        dernier_move.append(rect_queen)
+                        for pion in liste_pion:
+                           if fonction(pion.case_pion) ==diago2:
+                                 case_good=False
+                        tempo=diago2
+                        tempo[0]+=1
+                        tempo[1]=int(tempo[1])
+                        tempo[1]-=1
+                        tempo[1]=str(tempo[1])
+                        diago2=tempo[:]
+            case_good=True
+            for o in range(8):
+               for i in liste_case:
+                  if diago4==fonction(i.num_case):
+                     for pion in liste_pion:
+                           if fonction(pion.case_pion) ==diago4 and pion.color==self.color:
+                              case_good=False
+                     if case_good:                         
+                        rect_queen=case(i.x,i.y,50,50,surface)
+                        pygame.draw.rect(surface,[53,60,255],rect_queen)
+                        dernier_move.append(rect_queen)
+                        for pion in liste_pion:
+                           if fonction(pion.case_pion) ==diago4:
+                                 case_good=False
+                        tempo=diago4
+                        tempo[0]-=1
+                        tempo[1]=int(tempo[1])
+                        tempo[1]-=1
+                        tempo[1]=str(tempo[1])
+                        diago4=tempo[:]
+            case_good=True
+            for o in range(8):
+               for i in liste_case:
+                  if liste1==fonction(i.num_case):
+                     for pion in liste_pion:
+                           if fonction(pion.case_pion) ==liste1 and pion.color==self.color:
+                              case_good=False
+                     if case_good:                          
+                        rect_queen=case(i.x,i.y,50,50,surface)
+                        pygame.draw.rect(surface,[53,60,255],rect_queen)
+                        dernier_move.append(rect_queen)
+                        for pion in liste_pion:
+                           if fonction(pion.case_pion) ==liste1:
+                              case_good=False
+                        tempo=liste1
+                        tempo[1]=int(tempo[1])
+                        tempo[1]+=1
+                        tempo[1]=str(tempo[1])
+                        liste1=tempo[:]
+                        
+            case_good=True
+            for o in range(8):
+               for i in liste_case:
+                  if liste2==fonction(i.num_case):
+                     for pion in liste_pion:
+                           if fonction(pion.case_pion) ==liste2 and pion.color==self.color:
+                              case_good=False
+                     if case_good:                          
+                        rect_queen=case(i.x,i.y,50,50,surface)
+                        pygame.draw.rect(surface,[53,60,255],rect_queen)
+                        dernier_move.append(rect_queen)
+                        for pion in liste_pion:
+                           if fonction(pion.case_pion) ==liste2:
+                              case_good=False
+                        tempo=liste2
+                        tempo[0]+=1
+                        liste2=tempo[:]
+            case_good=True
+            for o in range(8):
+               for i in liste_case:
+                  if liste3==fonction(i.num_case):
+                     for pion in liste_pion:
+                           if fonction(pion.case_pion) ==liste3 and pion.color==self.color:
+                              case_good=False
+                     if case_good:                         
+                        rect_queen=case(i.x,i.y,50,50,surface)
+                        pygame.draw.rect(surface,[53,60,255],rect_queen)
+                        dernier_move.append(rect_queen)
+                        for pion in liste_pion:
+                           if fonction(pion.case_pion) ==liste3:
+                              case_good=False
+                        tempo=liste3
+                        tempo[0]-=1
+                        liste3=tempo[:]
+            case_good=True
+            for o in range(8):
+               for i in liste_case:
+                  if liste4==fonction(i.num_case):
+                     for pion in liste_pion:
+                           if fonction(pion.case_pion) ==liste4 and pion.color==self.color:
+                              case_good=False
+                     if case_good:                        
+                        rect_queen=case(i.x,i.y,50,50,surface)
+                        pygame.draw.rect(surface,[53,60,255],rect_queen)
+                        dernier_move.append(rect_queen)
+                        for pion in liste_pion:
+                           if fonction(pion.case_pion) ==liste4:
+                              case_good=False
+                        tempo=liste4
+                        tempo[1]=int(tempo[1])
+                        tempo[1]-=1
+                        tempo[1]=str(tempo[1])
+                        liste4=tempo[:]
          else:
-            hypy-=1
-            if self.premier_coup:
-               liste2=[hypx,str(hypy-1)]
-         hyp_case_pion={hypx:self.x,str(hypy):self.y}
-         liste1=fonction(hyp_case_pion)
-         for e in liste_case:
-            #print(liste1[:],liste2[:],"L0")
-            if liste1[:]==fonction(e.num_case):
-               for a in liste_pion:
-                  if liste1[:] == fonction(a.case_pion):
-                     pion_sur_pion=False
-               if pion_sur_pion:
-                  rect_hyp=case(e.x,e.y,50,50,color=[53,60,255])
-                  pygame.draw.rect(surface,[53,60,255],rect_hyp,)
-                  dernier_move.append(rect_hyp)
-                  case_trouver=True
+            if black_white:
+               hypy+=1
+               if self.premier_coup:
+                  liste2=[hypx,str(hypy+1)]
+                  
             else:
-               if liste2[:]==fonction(e.num_case):
+               hypy-=1
+               if self.premier_coup:
+                  liste2=[hypx,str(hypy-1)]
+            hyp_case_pion={hypx:self.x,str(hypy):self.y}
+            liste1=fonction(hyp_case_pion)
+            for e in liste_case:
+               #print(liste1[:],liste2[:],"L0")
+               if liste1[:]==fonction(e.num_case):
                   for a in liste_pion:
-                     if liste2[:] == fonction(a.case_pion):
+                     if liste1[:] == fonction(a.case_pion):
                         pion_sur_pion=False
                   if pion_sur_pion:
                      rect_hyp=case(e.x,e.y,50,50,color=[53,60,255])
                      pygame.draw.rect(surface,[53,60,255],rect_hyp,)
                      dernier_move.append(rect_hyp)
                      case_trouver=True
-            
+               else:
+                  if liste2[:]==fonction(e.num_case):
+                     for a in liste_pion:
+                        if liste2[:] == fonction(a.case_pion):
+                           pion_sur_pion=False
+                     if pion_sur_pion:
+                        rect_hyp=case(e.x,e.y,50,50,color=[53,60,255])
+                        pygame.draw.rect(surface,[53,60,255],rect_hyp,)
+                        dernier_move.append(rect_hyp)
+                        case_trouver=True
+               
 
-         
-         liste1[0]-=1
-         for e in liste_case:
-            #print(liste1[:],liste2[:],"L2")
-            liste2=fonction(e.num_case)
-            if liste1[:]==liste2[:]:
-               for a in liste_pion:
-                  if fonction(a.case_pion) == liste1[:] and a.color != self.color:
-                     rect_hyp_kills=case(e.x,e.y,50,50,color=[80,80,80])
-                     pygame.draw.rect(surface,[80,80,80],rect_hyp_kills)
-                     
-                     dernier_move.append(rect_hyp_kills)
-         hypx+=2
-         hyp_case_pion={hypx:self.x,str(hypy):self.y}
-         liste1[0]+=2
-         for e in liste_case:
-            liste2=fonction(e.num_case)
-            #print(liste1[:],liste2[:],"L1")
-            if liste1[:]==liste2[:]:
-               for a in liste_pion:
-                  if fonction(a.case_pion) == liste1[:] and self.color!= a.color:
-                     rect_hyp_kill=case(e.x,e.y,50,50,color=[80,80,80])
-                     pygame.draw.rect(surface,[80,80,80],rect_hyp_kill)
-                     dernier_move.append(rect_hyp_kill)
+            
+            liste1[0]-=1
+            for e in liste_case:
+               #print(liste1[:],liste2[:],"L2")
+               liste2=fonction(e.num_case)
+               if liste1[:]==liste2[:]:
+                  for a in liste_pion:
+                     if fonction(a.case_pion) == liste1[:] and a.color != self.color:
+                        rect_hyp_kills=case(e.x,e.y,50,50,color=[80,80,80])
+                        pygame.draw.rect(surface,[80,80,80],rect_hyp_kills)
+                        
+                        dernier_move.append(rect_hyp_kills)
+            hypx+=2
+            hyp_case_pion={hypx:self.x,str(hypy):self.y}
+            liste1[0]+=2
+            for e in liste_case:
+               liste2=fonction(e.num_case)
+               #print(liste1[:],liste2[:],"L1")
+               if liste1[:]==liste2[:]:
+                  for a in liste_pion:
+                     if fonction(a.case_pion) == liste1[:] and self.color!= a.color:
+                        rect_hyp_kill=case(e.x,e.y,50,50,color=[80,80,80])
+                        pygame.draw.rect(surface,[80,80,80],rect_hyp_kill)
+                        dernier_move.append(rect_hyp_kill)
 
                      
 
@@ -223,13 +398,26 @@ class pion(case):
       self.y,self.x=coordyx.y,coordyx.x
       self.NcaseY,self.NcaseX=int(coordyx.y/50),int(coordyx.x/50)#self.dernier_move[len(self.dernier_move)-1].y,self.dernier_move[len(self.dernier_move)-1].x
       self.case_pion={self.NcaseX:self.x,str(self.NcaseY):self.y}
-       
+      if type(self)==pion:
+         if not self.askqueen:
+            if self.color=="black":
+               if self.NcaseY==7:
+                  self.pion=pygame.transform.scale(pygame.image.load("chess/bQ.png").convert_alpha(),[50,50])
+                  self.askqueen=True
+            else:
+               if self.NcaseY==0:
+                  self.pion=pygame.transform.scale(pygame.image.load("chess/wQ.png").convert_alpha(),[50,50])
+                  self.askqueen=True
+
       surface.fill([0,0,0])
       for e in liste_case:
          pygame.draw.rect(surface,e.color,e)
 
       for e in liste_pion:
          surface.blit(e.pion,[e.case_pion[e.NcaseX],e.case_pion[str(e.NcaseY)]])
+      
+
+
    def question_kill(self,surface,liste_pion,liste_case):
       king_dead=False
       for a,c in enumerate(liste_pion):

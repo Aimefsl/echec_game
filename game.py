@@ -18,7 +18,7 @@ ma_case=False
 can_pass=False
 #number=0
 finish=False
-turn=True
+turn=False
 turns_color="white"
 #Boucle Principal
 while jeu_lance:
@@ -33,6 +33,7 @@ while jeu_lance:
                 if can_pass:
                     if rectan_tempo==[]:
                         can_pass=False
+
                     else:
                         for a,i in enumerate(rectan_tempo):
                                 if i.x<event.pos[0]<i.x+50 and i.y<event.pos[1]<i.y+50:
@@ -44,9 +45,9 @@ while jeu_lance:
                                             
                                             if turn:
                                                 turn=False
-                                                turns_color="black"
-                                            else:
                                                 turns_color="white"
+                                            else:
+                                                turns_color="black"
                                                 turn=True
                                             if type(check)==king:
                                                 if check.king_dead:
@@ -57,7 +58,7 @@ while jeu_lance:
 
 
                                                     else:
-                                                        print("les whites ont gagné")
+                                                        print("les black ont gagné")
                                                         jeu_lance=False
 
 
